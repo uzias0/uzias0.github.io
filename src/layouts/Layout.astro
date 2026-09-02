@@ -1,0 +1,54 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script is:inline>
+      // Only opt into the scroll-reveal choreography once JS is confirmed running.
+      // Without this, .reveal content defaults to fully visible (see global.css).
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+  <body class="overflow-x-hidden">
+    <slot />
+    <script>
+      const revealEls = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          }
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -5% 0px' }
+      );
+      revealEls.forEach((el) => observer.observe(el));
+
+      // Safety net: force-reveal anything the observer hasn't caught yet
+      // (headless captures, print view, very fast scrolls, edge cases).
+      window.setTimeout(() => {
+        revealEls.forEach((el) => el.classList.add('is-visible'));
+      }, 1800);
+    </script>
+  </body>
+</html>

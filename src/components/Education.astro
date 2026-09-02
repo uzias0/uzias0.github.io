@@ -1,0 +1,57 @@
+---
+import SectionHeader from './SectionHeader.astro';
+
+const education = [
+  {
+    course: 'Análise e Desenvolvimento de Sistemas',
+    org: 'Estácio · bolsista ProUni — transferido da Faculdade REGES (Ribeirão Preto) em set/2026',
+    tag: 'cursando',
+  },
+  {
+    course: 'Operador Técnico de TI',
+    org: 'SENAI Ribeirão Preto',
+    tag: 'jan—dez/2024',
+  },
+];
+
+const certs = [
+  'Fundamentos de Python — SENAI',
+  'Fundamentos de Java — SENAI',
+  'Segurança Cibernética — SENAI',
+  'Ética na Inteligência Artificial — SENAI',
+  'Privacidade e Proteção de Dados (LGPD) — SENAI',
+  'Pacote Office Avançado — SENAI',
+  'Empreendedorismo — ONG SARA',
+  'Inserção ao Mercado de Trabalho — ONG SARA',
+];
+---
+<section id="formacao" class="border-b border-line py-20">
+  <div class="mx-auto max-w-wrap px-6">
+    <SectionHeader index="03" eyebrow="formação" title="Formação acadêmica" />
+
+    <div class="reveal reveal-delay-1 space-y-4">
+      {education.map((e) => (
+        <div class="flex flex-wrap items-start justify-between gap-3 rounded-xl border border-line bg-surface/50 p-5 transition-colors hover:border-accent/40">
+          <div>
+            <h3 class="font-display text-base font-bold">{e.course}</h3>
+            <p class="mt-1 text-sm text-ink-soft">{e.org}</p>
+          </div>
+          <span class="whitespace-nowrap rounded-full border border-line px-2.5 py-1 font-mono text-xs text-ink-faint">
+            {e.tag}
+          </span>
+        </div>
+      ))}
+    </div>
+
+    <div class="reveal reveal-delay-2 mt-9">
+      <h3 class="mb-3 font-mono text-xs uppercase tracking-[0.1em] text-ink-faint">Certificações e cursos</h3>
+      <div class="flex flex-wrap gap-2.5">
+        {certs.map((c) => (
+          <span class="rounded-md border border-line bg-surface-2/60 px-3 py-1.5 font-mono text-xs text-ink-soft transition-colors hover:border-accent/40 hover:text-ink">
+            {c}
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,96 @@
+---
+import SectionHeader from './SectionHeader.astro';
+---
+<section id="github" class="border-b border-line py-20">
+  <div class="mx-auto max-w-wrap px-6">
+    <SectionHeader
+      index="06"
+      eyebrow="github"
+      title="Repositórios públicos"
+      lede="Lista carregada em tempo real da API do GitHub — sempre reflete o que está público na minha conta."
+    />
+
+    <div class="reveal reveal-delay-1 overflow-hidden rounded-2xl border border-line bg-surface/50">
+      <div class="flex items-center justify-between border-b border-line bg-surface-2/60 px-4 py-3 font-mono text-xs text-ink-faint">
+        <span>github.com/uzias0 — repos --sort=updated</span>
+        <span class="flex gap-1.5">
+          <span class="h-2 w-2 rounded-full bg-line"></span>
+          <span class="h-2 w-2 rounded-full bg-line"></span>
+          <span class="h-2 w-2 rounded-full bg-line"></span>
+        </span>
+      </div>
+      <div id="repo-list">
+        <div class="px-4 py-6 font-mono text-sm text-ink-faint">carregando…</div>
+      </div>
+      <div class="border-t border-line px-4 py-3 font-mono text-sm">
+        <a href="https://github.com/uzias0?tab=repositories" target="_blank" rel="noopener" class="text-accent hover:underline">
+          ver todos no GitHub →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+  const list = document.getElementById('repo-list');
+  const FALLBACK = [
+    {
+      name: 'estuda-mais',
+      description:
+        'Plataforma de aprendizagem + enciclopédia acadêmica de Psicologia. Módulo 1 (fundação técnica) concluído.',
+      language: 'TypeScript',
+      updated_at: '2026-09-02T01:52:05Z',
+      html_url: 'https://github.com/uzias0/estuda-mais',
+    },
+  ];
+
+  function timeAgo(iso: string) {
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return '';
+    const diffMs = Date.now() - d.getTime();
+    const days = Math.floor(diffMs / 86400000);
+    if (days <= 0) return 'hoje';
+    if (days === 1) return 'ontem';
+    if (days < 30) return `${days} dias atrás`;
+    const months = Math.floor(days / 30);
+    if (months < 12) return `${months} ${months === 1 ? 'mês atrás' : 'meses atrás'}`;
+    const years = Math.floor(months / 12);
+    return `${years} ${years === 1 ? 'ano atrás' : 'anos atrás'}`;
+  }
+
+  type Repo = { name: string; description: string | null; language: string | null; updated_at: string; html_url: string; fork?: boolean };
+
+  function render(repos: Repo[]) {
+    if (!list) return;
+    if (!repos.length) {
+      list.innerHTML = '<div class="px-4 py-6 font-mono text-sm text-ink-faint">nenhum repositório público no momento.</div>';
+      return;
+    }
+    list.innerHTML = repos
+      .map(
+        (r) => `
+        <a class="group flex items-center justify-between gap-4 border-t border-line px-4 py-3.5 transition-colors first:border-t-0 hover:bg-surface-2/60" href="${r.html_url}" target="_blank" rel="noopener">
+          <div class="min-w-0">
+            <div class="truncate text-sm font-semibold text-ink group-hover:text-accent">${r.name}</div>
+            ${r.description ? `<div class="mt-0.5 truncate text-xs text-ink-soft">${r.description}</div>` : ''}
+          </div>
+          <div class="flex shrink-0 items-center gap-4 font-mono text-xs text-ink-faint">
+            <span>${r.language ?? '—'}</span>
+            <span>${timeAgo(r.updated_at)}</span>
+          </div>
+        </a>`
+      )
+      .join('');
+  }
+
+  fetch('https://api.github.com/users/uzias0/repos?sort=updated&per_page=100')
+    .then((res) => {
+      if (!res.ok) throw new Error('bad response');
+      return res.json();
+    })
+    .then((data: Repo[]) => {
+      if (!Array.isArray(data)) throw new Error('unexpected payload');
+      const repos = data.filter((r) => !r.fork);
+      render(repos.length ? repos : FALLBACK);
+    })
+    .catch(() => render(FALLBACK));
+</script>

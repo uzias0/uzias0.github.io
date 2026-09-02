@@ -1,0 +1,65 @@
+---
+const links = [
+  { href: '#sobre', label: 'Sobre' },
+  { href: '#experiencia', label: 'Experiência' },
+  { href: '#formacao', label: 'Formação' },
+  { href: '#projetos', label: 'Projetos' },
+  { href: '#github', label: 'GitHub' },
+  { href: '#contato', label: 'Contato' },
+];
+---
+<header class="sticky top-0 z-40 border-b border-line/80 bg-bg/85 backdrop-blur-md">
+  <div class="mx-auto flex max-w-wrap items-center justify-between px-6 py-3.5">
+    <a href="#" class="font-mono text-sm font-semibold tracking-tight text-ink">
+      uzias<span class="text-accent">@</span>tacio
+    </a>
+    <nav class="hidden gap-6 sm:flex">
+      {links.map((l) => (
+        <a
+          href={l.href}
+          class="border-b border-transparent font-mono text-xs uppercase tracking-widest text-ink-soft transition-colors hover:border-accent hover:text-ink"
+        >
+          {l.label}
+        </a>
+      ))}
+    </nav>
+    <button
+      id="menu-btn"
+      aria-label="Abrir menu"
+      aria-expanded="false"
+      class="flex h-9 w-9 items-center justify-center rounded-md border border-line text-ink-soft sm:hidden"
+    >
+      <svg id="menu-icon-open" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg id="menu-icon-close" xmlns="http://www.w3.org/2000/svg" class="hidden h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <nav id="mobile-menu" class="hidden flex-col border-t border-line/80 px-6 py-3 sm:hidden">
+    {links.map((l) => (
+      <a href={l.href} class="border-b border-line/60 py-2.5 font-mono text-xs uppercase tracking-widest text-ink-soft last:border-0">
+        {l.label}
+      </a>
+    ))}
+  </nav>
+</header>
+<script>
+  const btn = document.getElementById('menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('menu-icon-open');
+  const iconClose = document.getElementById('menu-icon-close');
+  btn?.addEventListener('click', () => {
+    const isHidden = menu?.classList.contains('hidden');
+    menu?.classList.toggle('hidden');
+    menu?.classList.toggle('flex');
+    iconOpen?.classList.toggle('hidden');
+    iconClose?.classList.toggle('hidden');
+    btn.setAttribute('aria-expanded', String(!!isHidden));
+  });
+  menu?.querySelectorAll('a').forEach((a) =>
+    a.addEventListener('click', () => {
+      menu.classList.add('hidden');
+      menu.classList.remove('flex');
+      iconOpen?.classList.remove('hidden');
+      iconClose?.classList.add('hidden');
+    })
+  );
+</script>

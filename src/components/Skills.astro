@@ -1,0 +1,74 @@
+---
+import SectionHeader from './SectionHeader.astro';
+
+const technical = [
+  { name: 'Suporte Técnico', level: 90 },
+  { name: 'Pacote Office (avançado)', level: 85 },
+  { name: 'Power BI (intermediário)', level: 65 },
+  { name: 'Python (básico)', level: 40 },
+  { name: 'Java (básico)', level: 35 },
+  { name: 'Redes e Segurança (básico)', level: 45 },
+];
+
+const behavioral = [
+  'Proatividade',
+  'Boa comunicação',
+  'Trabalho em equipe',
+  'Facilidade de aprendizagem',
+  'Maturidade socioemocional',
+  'Resiliência',
+  'Compromisso',
+];
+---
+<section id="habilidades" class="border-b border-line py-20">
+  <div class="mx-auto max-w-wrap px-6">
+    <SectionHeader index="04" eyebrow="habilidades" title="Habilidades" />
+
+    <div class="reveal reveal-delay-1">
+      <h3 class="mb-4 font-mono text-xs uppercase tracking-[0.1em] text-ink-faint">Técnicas</h3>
+      <div class="grid gap-x-8 gap-y-4 sm:grid-cols-2">
+        {technical.map((s) => (
+          <div>
+            <div class="mb-1.5 flex items-center justify-between font-mono text-xs text-ink-soft">
+              <span>{s.name}</span>
+            </div>
+            <div class="h-1.5 w-full overflow-hidden rounded-full bg-surface-2">
+              <div
+                class="skill-bar h-full origin-left scale-x-0 rounded-full bg-gradient-to-r from-accent/60 to-accent transition-transform duration-[1200ms] ease-out"
+                data-level={s.level}
+              ></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="reveal reveal-delay-2 mt-10">
+      <h3 class="mb-4 font-mono text-xs uppercase tracking-[0.1em] text-ink-faint">Comportamentais</h3>
+      <div class="flex flex-wrap gap-2.5">
+        {behavioral.map((b) => (
+          <span class="rounded-full border border-amber/45 px-3.5 py-1.5 font-mono text-xs text-amber">
+            {b}
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+  const bars = document.querySelectorAll<HTMLElement>('.skill-bar');
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          const el = entry.target as HTMLElement;
+          const level = el.dataset.level ?? '0';
+          el.style.transform = `scaleX(${Number(level) / 100})`;
+          io.unobserve(el);
+        }
+      }
+    },
+    { threshold: 0.4 }
+  );
+  bars.forEach((b) => io.observe(b));
+</script>

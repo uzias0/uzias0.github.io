@@ -1,0 +1,65 @@
+---
+import SectionHeader from './SectionHeader.astro';
+
+const jobs = [
+  {
+    date: 'abr/2026 — atual',
+    role: 'Técnico em Tecnologia da Informação',
+    org: 'Agrosystem',
+    current: true,
+    bullets: [
+      'Help desk e suporte técnico: atendimento a usuários, diagnóstico e resolução de problemas de hardware, software e equipamentos de TI.',
+      'Desenvolvimento de sistemas internos, incluindo uma plataforma de exibição de conteúdo em TVs corporativas, um sistema de gestão de reserva de salas e uma plataforma de monitoramento de infraestrutura (NOC).',
+      'Redes, servidores e infraestrutura: configuração e manutenção, garantindo disponibilidade dos serviços de TI.',
+    ],
+    note: 'Os sistemas desenvolvidos são propriedade da empresa e por isso não são exibidos publicamente aqui.',
+  },
+  {
+    date: 'jan/2025 — fev/2026',
+    role: 'Administrativo',
+    org: 'Academia da Força Aérea',
+    bullets: ['Apoio administrativo geral.', 'Organização de documentos e atendimento interno.'],
+  },
+  {
+    date: 'jan/2024 — dez/2024',
+    role: 'Operador de Suporte Técnico',
+    org: 'Alcolina Químicos e Derivados',
+    bullets: [
+      'Suporte técnico aos usuários.',
+      'Manutenção e configuração de computadores.',
+      'Auxílio em redes e sistemas internos.',
+    ],
+  },
+];
+---
+<section id="experiencia" class="border-b border-line py-20">
+  <div class="mx-auto max-w-wrap px-6">
+    <SectionHeader index="02" eyebrow="experiência" title="Experiência profissional" />
+
+    <ol class="relative space-y-10 border-l border-line pl-8 sm:pl-10">
+      {jobs.map((job, i) => (
+        <li class:list={["reveal relative", i === 0 && "reveal-delay-1", i === 1 && "reveal-delay-2", i === 2 && "reveal-delay-3"]}>
+          <span
+            class:list={[
+              "absolute -left-[41px] top-1.5 h-3.5 w-3.5 rounded-full border-2 sm:-left-[49px]",
+              job.current ? "border-accent bg-accent shadow-[0_0_0_4px_rgba(87,214,196,0.15)]" : "border-line bg-bg",
+            ]}
+          ></span>
+          <div class="mb-1.5 font-mono text-xs text-ink-faint">{job.date}</div>
+          <h3 class="font-display text-lg font-bold">
+            {job.role} <span class="font-sans text-base font-semibold text-accent">· {job.org}</span>
+          </h3>
+          <ul class="mt-3 space-y-1.5 text-ink-soft">
+            {job.bullets.map((b) => (
+              <li class="flex gap-2.5">
+                <span class="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-ink-faint"></span>
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+          {job.note && <p class="mt-3 text-sm italic text-ink-faint">{job.note}</p>}
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

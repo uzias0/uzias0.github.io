@@ -1,53 +1,154 @@
 ---
 import SectionHeader from './SectionHeader.astro';
 
-const stack = ['Next.js', 'TypeScript', 'Prisma', 'PostgreSQL', 'Capacitor', 'Vitest'];
+interface ProjectItem {
+  title: string;
+  subtitle: string;
+  status: string;
+  statusTone: 'accent' | 'amber' | 'muted';
+  description: string;
+  stack: string[];
+  site?: string;
+  repo?: string;
+  note?: string;
+}
+
+const projects: ProjectItem[] = [
+  {
+    title: 'Estuda+',
+    subtitle: 'Plataforma de aprendizagem + enciclopédia acadêmica de Psicologia',
+    status: 'Em desenvolvimento',
+    statusTone: 'accent',
+    description:
+      'Projeto pessoal em construção: fundação técnica (módulo 1) concluída, com banco de dados, autenticação e infraestrutura de testes prontos — a interface e o conteúdo do produto ainda estão por vir.',
+    stack: ['Next.js', 'TypeScript', 'Prisma', 'PostgreSQL', 'Capacitor', 'Vitest'],
+    site: 'https://estuda-mais-lqwv.onrender.com',
+    repo: 'https://github.com/uzias0/estuda-mais',
+  },
+  {
+    title: 'ALVORA',
+    subtitle: 'Plataforma SaaS multiempresa de gestão para pequenos e médios negócios',
+    status: 'Projeto pessoal',
+    statusTone: 'amber',
+    description:
+      'Sistema de gestão empresarial que se adapta ao segmento de cada cliente: uma açaiteria, um eletricista e uma assistência técnica usam a mesma plataforma, mas com fluxo e recursos priorizados de forma diferente. Reúne CRM, catálogo de produtos, estoque, financeiro, vendas, PDV, orçamentos, ordens de serviço, agenda e um portal público — com isolamento de dados entre empresas, controle de permissões e módulo fiscal (NFC-e) em fase de homologação. Funciona como aplicativo instalável (PWA), com um projeto Android em paralelo.',
+    stack: ['TypeScript', 'Multiempresa', 'PDV', 'Financeiro', 'Fiscal (NFC-e)', 'PWA'],
+    note: 'Repositório privado',
+  },
+  {
+    title: 'Sistema financeiro corporativo',
+    subtitle: 'Automação de contas a pagar para uma empresa do agronegócio',
+    status: 'Projeto profissional',
+    statusTone: 'muted',
+    description:
+      'Sistema financeiro interno que automatiza parte do fluxo de contas a pagar: identifica notas fiscais e boletos recebidos por e-mail, vincula automaticamente aos lançamentos corretos quando a confiança é alta, e sincroniza o status com o sistema de gestão da empresa. Desenvolvido no meu trabalho atual — sem nome, repositório, capturas de tela ou detalhes técnicos públicos.',
+    stack: [],
+    note: 'Projeto confidencial',
+  },
+  {
+    title: 'Plataforma de exibição de conteúdo',
+    subtitle: 'Digital signage interno para TVs corporativas',
+    status: 'Projeto profissional',
+    statusTone: 'muted',
+    description:
+      'Painel de administração interno para gerenciar o que é exibido nas TVs da empresa: fotos, vídeos e páginas organizados em playlists por TV ou grupo de TVs, com pareamento simples de novos aparelhos. Desenvolvido no meu trabalho atual — sem nome, repositório, capturas de tela ou detalhes técnicos públicos.',
+    stack: [],
+    note: 'Projeto confidencial',
+  },
+  {
+    title: 'Sistema de gestão de reservas',
+    subtitle: 'Agendamento interno de salas de reunião',
+    status: 'Projeto profissional',
+    statusTone: 'muted',
+    description:
+      'Sistema interno para consulta de disponibilidade e agendamento de salas de reunião, facilitando a organização do espaço físico da empresa. Desenvolvido no meu trabalho atual, sem detalhes técnicos ou repositório públicos.',
+    stack: [],
+    note: 'Projeto confidencial',
+  },
+  {
+    title: 'Plataforma de monitoramento de infraestrutura',
+    subtitle: 'Dashboard e alertas para o NOC da empresa',
+    status: 'Projeto profissional',
+    statusTone: 'muted',
+    description:
+      'Plataforma de monitoramento de infraestrutura de TI, com dashboard e alertas em tempo real, dando apoio à operação do NOC (Network Operations Center) da empresa. Desenvolvido no meu trabalho atual, sem detalhes técnicos ou repositório públicos.',
+    stack: [],
+    note: 'Projeto confidencial',
+  },
+];
+
+const toneClasses: Record<ProjectItem['statusTone'], string> = {
+  accent: 'border-accent/35 bg-accent/10 text-accent',
+  amber: 'border-amber/40 bg-amber/10 text-amber',
+  muted: 'border-line bg-surface-2/60 text-ink-faint',
+};
 ---
 <section id="projetos" class="border-b border-line py-20">
   <div class="mx-auto max-w-wrap px-6">
-    <SectionHeader index="05" eyebrow="projeto em destaque" title="Estuda+" />
+    <SectionHeader index="05" eyebrow="projetos em destaque" title="Projetos" />
 
-    <div class="reveal reveal-delay-1 group relative overflow-hidden rounded-2xl border border-line bg-surface/50 p-7 transition-colors hover:border-accent/40 sm:p-9">
-      <div class="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-accent/10 blur-3xl transition-opacity group-hover:opacity-80"></div>
-      <div class="relative flex flex-wrap items-start justify-between gap-4">
-        <h3 class="max-w-lg font-display text-xl font-bold sm:text-2xl">
-          Plataforma de aprendizagem + enciclopédia acadêmica de Psicologia
-        </h3>
-        <span class="whitespace-nowrap rounded-full border border-accent/35 bg-accent/10 px-3 py-1 font-mono text-[11px] uppercase tracking-wide text-accent">
-          Em desenvolvimento
-        </span>
-      </div>
-      <p class="relative mt-4 max-w-2xl text-ink-soft">
-        Projeto pessoal em construção: fundação técnica (módulo 1) concluída, com banco de dados, autenticação
-        e infraestrutura de testes prontos — a interface e o conteúdo do produto ainda estão por vir.
-      </p>
-      <div class="relative mt-5 flex flex-wrap gap-2">
-        {stack.map((s) => (
-          <span class="rounded-md border border-line bg-surface-2/60 px-2.5 py-1 font-mono text-xs text-ink-soft">
-            {s}
-          </span>
-        ))}
-      </div>
-      <div class="relative mt-6 flex flex-wrap gap-3">
-        <a
-          href="https://estuda-mais-lqwv.onrender.com"
-          target="_blank"
-          rel="noopener"
-          class="inline-flex items-center gap-2 rounded-md border border-accent/50 bg-accent/10 px-4 py-2 font-mono text-sm text-accent transition-all hover:-translate-y-0.5 hover:border-accent"
-        >
-          Ver site
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-        </a>
-        <a
-          href="https://github.com/uzias0/estuda-mais"
-          target="_blank"
-          rel="noopener"
-          class="inline-flex items-center gap-2 rounded-md border border-line bg-surface px-4 py-2 font-mono text-sm transition-all hover:-translate-y-0.5 hover:border-accent"
-        >
-          Ver repositório
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-        </a>
-      </div>
+    <div class="grid gap-6">
+      {projects.map((p, i) => (
+        <div class:list={[
+          'reveal group relative overflow-hidden rounded-2xl border border-line bg-surface/50 p-7 transition-colors hover:border-accent/40 sm:p-9',
+          i === 0 && 'reveal-delay-1',
+          i === 1 && 'reveal-delay-2',
+          i >= 2 && 'reveal-delay-3',
+        ]}>
+          <div class="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-accent/10 blur-3xl transition-opacity group-hover:opacity-80"></div>
+          <div class="relative flex flex-wrap items-start justify-between gap-4">
+            <div class="max-w-lg">
+              <h3 class="font-display text-xl font-bold sm:text-2xl">{p.title}</h3>
+              <p class="mt-1.5 text-sm text-ink-soft">{p.subtitle}</p>
+            </div>
+            <span class={`whitespace-nowrap rounded-full border px-3 py-1 font-mono text-[11px] uppercase tracking-wide ${toneClasses[p.statusTone]}`}>
+              {p.status}
+            </span>
+          </div>
+          <p class="relative mt-4 max-w-2xl text-ink-soft">
+            {p.description}
+          </p>
+          {p.stack.length > 0 && (
+            <div class="relative mt-5 flex flex-wrap gap-2">
+              {p.stack.map((s) => (
+                <span class="rounded-md border border-line bg-surface-2/60 px-2.5 py-1 font-mono text-xs text-ink-soft">
+                  {s}
+                </span>
+              ))}
+            </div>
+          )}
+          <div class="relative mt-6 flex flex-wrap items-center gap-3">
+            {p.site && (
+              <a
+                href={p.site}
+                target="_blank"
+                rel="noopener"
+                class="inline-flex items-center gap-2 rounded-md border border-accent/50 bg-accent/10 px-4 py-2 font-mono text-sm text-accent transition-all hover:-translate-y-0.5 hover:border-accent"
+              >
+                Ver site
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+              </a>
+            )}
+            {p.repo && (
+              <a
+                href={p.repo}
+                target="_blank"
+                rel="noopener"
+                class="inline-flex items-center gap-2 rounded-md border border-line bg-surface px-4 py-2 font-mono text-sm transition-all hover:-translate-y-0.5 hover:border-accent"
+              >
+                Ver repositório
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+              </a>
+            )}
+            {p.note && (
+              <span class="inline-flex items-center gap-1.5 font-mono text-xs text-ink-faint">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+                {p.note}
+              </span>
+            )}
+          </div>
+        </div>
+      ))}
     </div>
   </div>
 </section>

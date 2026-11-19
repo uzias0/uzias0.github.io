@@ -32,6 +32,7 @@ import SectionHeader from './SectionHeader.astro';
 </section>
 <script>
   const list = document.getElementById('repo-list');
+  const HIDDEN = ['cortes-ia'];
   const FALLBACK = [
     {
       name: 'estuda-mais',
@@ -89,7 +90,7 @@ import SectionHeader from './SectionHeader.astro';
     })
     .then((data: Repo[]) => {
       if (!Array.isArray(data)) throw new Error('unexpected payload');
-      const repos = data.filter((r) => !r.fork);
+      const repos = data.filter((r) => !r.fork && !HIDDEN.includes(r.name));
       render(repos.length ? repos : FALLBACK);
     })
     .catch(() => render(FALLBACK));

@@ -10,6 +10,24 @@ const technical = [
   { name: 'Redes e Segurança (médio)', level: 60 },
 ];
 
+const devStack = [
+  'Next.js',
+  'React',
+  'TypeScript',
+  'Node.js',
+  'Prisma',
+  'PostgreSQL',
+  'Redis / BullMQ',
+  'Tailwind CSS',
+  'Astro',
+  'PWA',
+  'Vitest',
+  'APIs de IA (Claude, Gemini)',
+  'Git e GitHub',
+  'Roblox Studio',
+  'Blender',
+];
+
 const behavioral = [
   'Proatividade',
   'Boa comunicação',
@@ -44,6 +62,17 @@ const behavioral = [
     </div>
 
     <div class="reveal reveal-delay-2 mt-10">
+      <h3 class="mb-4 font-mono text-xs uppercase tracking-[0.1em] text-ink-faint">Stack de desenvolvimento</h3>
+      <div class="flex flex-wrap gap-2.5">
+        {devStack.map((d) => (
+          <span class="rounded-md border border-accent/35 bg-accent/10 px-3 py-1.5 font-mono text-xs text-accent">
+            {d}
+          </span>
+        ))}
+      </div>
+    </div>
+
+    <div class="reveal reveal-delay-3 mt-10">
       <h3 class="mb-4 font-mono text-xs uppercase tracking-[0.1em] text-ink-faint">Comportamentais</h3>
       <div class="flex flex-wrap gap-2.5">
         {behavioral.map((b) => (
